@@ -1,117 +1,173 @@
-🎮 Reaction Game – Python + Flask + uv + ruff + pytest
-This project is a simple yet fully testable reaction-time game built with Python.
-It includes:
-Python backend (Flask)
-Game UI (HTML + JavaScript)
-uv for environment & dependency management
-ruff for linting
-pytest for testing
-The project satisfies the technical requirements of good code quality, testing, and modern Python tooling.
+🎮 Reaction Arena Game
 
+A fast-paced reaction-time browser game built with Python + Flask, fully tested with pytest, linted with ruff, and managed using uv.
+The project also includes a live deployment on Railway, allowing anyone to play the game online.
+
+✨ Features
+
+🔥 Fast reaction-time game (HTML + JavaScript frontend)
+
+🧠 Python backend for score evaluation
+
+🧪 Fully tested with pytest
+
+🧹 Clean codebase using ruff
+
+⚡ Dependency & environment management with uv
+
+☁️ Live deployment on Railway (*.up.railway.app)
+
+📡 JSON API (/api/score, /health)
+
+🧩 Modular structure (logic isolated for easy testing)
 
 📁 Project Structure
 reaction-arena-game/
 │
 ├─ reaction_game/
 │   ├─ __init__.py
-│   ├─ app.py             → Flask backend (runs the server & UI)
-│   ├─ logic.py           → Score evaluation functions
+│   ├─ app.py               → Flask backend (UI + API)
+│   ├─ logic.py             → Score evaluation logic
 │   └─ templates/
-│         └─ index.html   → Reaction game UI
+│         └─ index.html     → Reaction game UI
 │
 ├─ tests/
-│   ├─ test_app.py        → API tests
-│   └─ test_logic.py      → Unit tests for score logic
+│   ├─ test_app.py          → API tests
+│   └─ test_logic.py        → Logic tests
 │
-├─ pyproject.toml         → uv project configuration
-├─ ruff.toml              → ruff linter configuration
+├─ pyproject.toml           → uv project configuration
+├─ ruff.toml                → ruff linting rules
+├─ requirements.txt         → Required packages for Railway
 └─ README.md
 
-
-🚀 1. Installation
-Check if uv is installed:
+🚀 Installation
+This project uses uv as the Python package manager.
+1. Install uv
+pip install uv
+Verify:
 uv --version
 
-If not installed:
-pip install uv
-
-
-📦 2. Install Dependencies
-In the project root directory:
+📦 Install Dependencies
+Inside the project folder:
 uv sync
-
 This installs:
 Flask
-ruff
 pytest
+ruff
 
-
-▶️ 3. Running the Game (IMPORTANT)
-To start the backend server, run:
+▶️ Running the Game (Local Development)
+To launch the game backend locally:
 uv run python -m reaction_game.app
-
 If successful, you will see:
- * Running on http://127.0.0.1:5000
+Running on http://127.0.0.1:5000
 
-✔ Open the game in your browser:
+🕹 Play the Game
+
+Open in your browser:
+
 http://127.0.0.1:5000/
 
-
-This loads the interactive reaction game UI.
-
-✔ Health check endpoint:
+Health Check
 http://127.0.0.1:5000/health
 
+
 Returns:
+
 {"status": "ok"}
 
+🎯 Game Rules
 
+Game duration: 20 seconds
 
-🧪 4. Running Tests (pytest)
-To run all automated tests:
-uv run pytest
+Click the red circle as fast as possible
 
-You should see:
-2 passed in X.XXs
+Circle shrinks as score increases (difficulty increases)
 
-Tests cover:
-score evaluation logic
-API behavior
+Fast combo hits (within 700ms) increase score multiplier (up to x5)
 
+Clicking empty space: −1 point penalty
 
+Score is sent to backend (/api/score) and evaluated
 
-🧹 5. Code Quality (ruff)
-Check for linting issues:
-uv run ruff check .
-
-Automatically fix issues:
-uv run ruff check . --fix
-
-🎮 6. About the Game
-The game is located in:
-reaction_game/templates/index.html
-Features:
-20-second timed round
-Target appears randomly
-Target shrinks as score increases (harder gameplay)
-Fast hits increase COMBO multiplier (up to x5)
-Clicking empty space gives −1 penalty
-Score is sent to backend on round end
-Backend evaluates performance using logic.py
-
-Performance Levels:
-Score Range	Level
+Performance Levels (logic.py)
+Score	Rating
 0–5	poor
 6–15	average
 16–25	good
 26+	excellent
+🧪 Running Tests
+
+Run all test suites:
+
+uv run pytest
 
 
-🌐 7. API Example
-Send a score manually:
-curl -X POST http://127.0.0.1:5000/api/score \
-     -H "Content-Type: application/json" \
-     -d '{"score": 17}'
+Expected output:
+
+2 passed in X.XXs
+
+🧹 Linting with ruff
+
+Check code quality:
+
+uv run ruff check .
+
+
+Auto-fix issues:
+
+uv run ruff check . --fix
+
+🌍 Live Demo (Railway Deployment)
+
+This project is deployed on Railway.
+You can play the game online here:
+
+👉 LIVE DEMO:
+https://reaction-arena-game-production.up.railway.app
+
+
+☁️ Deployment Guide (Railway)
+1. Project Requirements
+
+Railway needs:
+
+Python 3.11+
+
+requirements.txt (Railway installs dependencies from this file)
+
+A Start Command
+
+2. Start Command (Railway → Settings)
+python -m reaction_game.app
+
+3. Ensure your app binds to the correct host & port
+
+In app.py:
+
+port = int(os.getenv("PORT", "5000"))
+app.run(debug=False, host="0.0.0.0", port=port)
+
+4. Generate a Public Domain
+
+Railway → Service → Settings → Public Networking / Generate Domain
+
+A public link like this will appear:
+
+https://reaction-arena-game.up.railway.app
+
+📡 API Endpoints
+GET /health
+
+Returns server status:
+
+{"status": "ok"}
+
+POST /api/score
+
+Submit score:
+
+{ "score": 17 }
+
 
 Response:
 
@@ -120,22 +176,12 @@ Response:
   "performance": "good"
 }
 
-
-🧭 8. Developer Notes
-Always run the app using:
-uv run python -m reaction_game.app
-
-Do not run:
-python reaction_game/app.py
-→ This will break package imports.
-
-The code is modular so that all logic is testable.
-
-🎓 9. Requirements Compliance Summary
+👨‍🏫 Instructor Notes (Technical Requirements Coverage)
 Requirement	Status
-Python code (good quality)	✔ ruff validation
-uv	                        ✔ pyproject.toml + uv sync
-ruff	                      ✔ linting config
-pytest                    	✔ unit tests included
-User interface             	✔ HTML/JS reaction game
-Backend	                    ✔ Flask server with routes
+Python code quality	✔ ruff, modular structure
+uv	✔ project managed with uv
+ruff	✔ linting included
+pytest	✔ unit tests included
+Frontend UI	✔ index.html
+Deployment	✔ Railway live demo
+API Design	✔ REST endpoints
