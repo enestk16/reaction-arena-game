@@ -1,0 +1,16 @@
+[project]
+name = "reaction-game"
+version = "0.1.0"
+requires-python = ">=3.11"
+description = "A small Python reaction game backend"
+authors = [{ name = "Your Name" }]
+
+dependencies = [
+    "flask",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest",
+    "ruff",
+]

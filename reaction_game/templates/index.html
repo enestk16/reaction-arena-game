@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Reaction Arena</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background: #070707;
+        color: #f5f5f5;
+      }
+
+      #game-area {
+        position: relative;
+        width: 420px;
+        height: 420px;
+        border: 2px solid #555;
+        border-radius: 12px;
+        overflow: hidden;
+        background: radial-gradient(circle at top, #333, #111);
+      }
+
+      .target {
+        position: absolute;
+        border-radius: 50%;
+        background: #ff4040;
+        box-shadow: 0 0 15px rgba(255, 64, 64, 0.7);
+        display: none;
+        cursor: pointer;
+      }
+
+      #info {
+        margin-top: 16px;
+        text-align: center;
+      }
+
+      #info div {
+        margin: 4px 0;
+      }
+
+      button {
+        margin-top: 12px;
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .bad-click {
+        animation: shake 0.2s;
+      }
+
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-6px);
+        }
+        50% {
+          transform: translateX(4px);
+        }
+        75% {
+          transform: translateX(-3px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Reaction Arena</h1>
+
+    <div id="game-area">
+      <div id="target" class="target"></div>
+    </div>
+
+    <div id="info">
+      <div>Time left: <span id="time">20</span>s</div>
+      <div>Score: <span id="score">0</span></div>
+      <div>Combo: <span id="combo">x1</span></div>
+      <div style="font-size: 0.9rem; opacity: 0.8">
+        Wrong click = −1 point
+      </div>
+    </div>
+
+    <button id="start-btn">Start Game</button>
+
+    <script>
+      const gameArea = document.getElementById("game-area");
+      const target = document.getElementById("target");
+      const startBtn = document.getElementById("start-btn");
+      const timeEl = document.getElementById("time");
+      const scoreEl = document.getElementById("score");
+      const comboEl = document.getElementById("combo");
+
+      let score = 0;
+      let timeLeft = 20; // daha kısa süre
+      let timerId;
+      let showTimeout;
+      let betweenTimeout;
+      let combo = 1;
+      let lastHitTime = null;
+      let gameRunning = false;
+
+      function setTargetSize() {
+        // zor: skor arttıkça hedef küçülüyor (min 26px)
+        const base = 64;
+        const shrink = score * 2;
+        const size = Math.max(26, base - shrink);
+        target.style.width = size + "px";
+        target.style.height = size + "px";
+      }
+
+      function randomPosition() {
+        const maxX = gameArea.clientWidth - target.clientWidth;
+        const maxY = gameArea.clientHeight - target.clientHeight;
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+        target.style.left = x + "px";
+        target.style.top = y + "px";
+      }
+
+      function scheduleNextTarget() {
+        if (!gameRunning || timeLeft <= 0) return;
+
+        // hedefler arası bekleme süresi: 250–700 ms
+        const delay = 250 + Math.random() * 450;
+        betweenTimeout = setTimeout(showTarget, delay);
+      }
+
+      function showTarget() {
+        if (!gameRunning || timeLeft <= 0) return;
+
+        setTargetSize();
+        randomPosition();
+        target.style.display = "block";
+
+        // hedef görünme süresi: skor arttıkça kısalıyor
+        const visibleBase = 650;
+        const visibleMin = 380;
+        const visibleTime = Math.max(
+          visibleMin,
+          visibleBase - score * 10
+        );
+
+        showTimeout = setTimeout(() => {
+          target.style.display = "none";
+          // kaçırırsan combo sıfırlanır
+          combo = 1;
+          comboEl.textContent = "x" + combo;
+          scheduleNextTarget();
+        }, visibleTime);
+      }
+
+      function startGame() {
+        score = 0;
+        timeLeft = 20;
+        combo = 1;
+        lastHitTime = null;
+        gameRunning = true;
+
+        scoreEl.textContent = score;
+        timeEl.textContent = timeLeft;
+        comboEl.textContent = "x" + combo;
+        startBtn.disabled = true;
+
+        showTarget();
+
+        timerId = setInterval(() => {
+          timeLeft -= 1;
+          timeEl.textContent = timeLeft;
+          if (timeLeft <= 0) {
+            endGame();
+          }
+        }, 1000);
+      }
+
+      function endGame() {
+        gameRunning = false;
+        clearInterval(timerId);
+        clearTimeout(showTimeout);
+        clearTimeout(betweenTimeout);
+        target.style.display = "none";
+        startBtn.disabled = false;
+
+        const username = prompt("Enter your name:", "Player");
+        fetch("/api/score", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: username || "anonymous", score }),
+        });
+
+        alert("Game over! Your score: " + score);
+      }
+
+      // hedefe tıklayınca + skor (combo ile)
+      target.addEventListener("click", (event) => {
+        if (!gameRunning || timeLeft <= 0) return;
+
+        event.stopPropagation(); // gameArea click'ine gitmesin
+
+        const now = performance.now();
+        if (lastHitTime && now - lastHitTime < 700) {
+          // 700 ms içinde tekrar vurursan combo artıyor (max x5)
+          combo = Math.min(5, combo + 1);
+        } else {
+          combo = 1;
+        }
+        lastHitTime = now;
+
+        score += combo;
+        scoreEl.textContent = score;
+        comboEl.textContent = "x" + combo;
+
+        target.style.display = "none";
+        clearTimeout(showTimeout);
+        scheduleNextTarget();
+      });
+
+      // Boş yere tıklarsan ceza
+      gameArea.addEventListener("click", () => {
+        if (!gameRunning || timeLeft <= 0) return;
+
+        score = Math.max(0, score - 1);
+        scoreEl.textContent = score;
+        combo = 1;
+        comboEl.textContent = "x" + combo;
+
+        gameArea.classList.remove("bad-click");
+        void gameArea.offsetWidth; // reflow
+        gameArea.classList.add("bad-click");
+      });
+
+      startBtn.addEventListener("click", () => {
+        if (!gameRunning) {
+          startGame();
+        }
+      });
+    </script>
+  </body>
+</html>
