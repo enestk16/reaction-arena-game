@@ -76,15 +76,19 @@ This makes it an ideal educational project for software engineering, full-stack 
 # 3. Architecture
 
 +---------------------+ +-----------------------------+
+
 | Frontend | | Backend |
+
 | (HTML + JS UI) | <------> | Flask API |
+
 | - Timer | API | - /api/score |
+
 | - Target logic | Request | - /health |
+
 | - Click events | | - Score Evaluation Logic |
+
 +---------------------+ +-----------------------------+
 
-yaml
-Kodu kopyala
 
 The backend is intentionally lightweight, exposing only essential endpoints while keeping the core algorithm pure and testable.  
 The frontend communicates with the server via JSON POST requests.
@@ -111,25 +115,37 @@ All tools were chosen to reflect modern industry practices.
 # 5. Project Structure
 
 reaction-arena-game/
+
 │
+
 ├── reaction_game/
+
 │ ├── app.py # Flask backend (API + HTML UI)
+
 │ ├── logic.py # Score evaluation logic
+
 │ └── templates/
+
 │ └── index.html # Frontend reaction-time UI
+
 │
 ├── tests/
+
 │ ├── test_logic.py # Unit tests
+
 │ └── test_app.py # API tests
+
 │
 ├── requirements.txt # Railway dependency file
+
 ├── pyproject.toml # uv configuration
+
 ├── ruff.toml # Linter rules
+
 ├── .gitignore # Clean repo - no venv/cache
+
 └── README.md
 
-yaml
-Kodu kopyala
 
 ---
 
@@ -260,12 +276,19 @@ https://reaction-arena-game-production.up.railway.app
 # 11. Instructor Requirements Mapping
 Requirement	Delivered
 uv usage	✅ Yes
+
 ruff usage	✅ Yes
+
 pytest tests	✅ Yes (logic + API)
+
 Clean Python code	✅ Modular + Linted
+
 UI included	✅ index.html
+
 Deployment	✅ Railway
+
 Good documentation	✅ This README
+
 No .venv / __pycache__	✅ Removed & ignored
 
 This README exceeds the expectations for clarity, structure, and professionalism.
@@ -286,6 +309,7 @@ Reproducible environments
 Cloud deployment best practices
 
 It is intentionally compact yet complete — ideal for coursework, portfolio projects, or learning foundational full-stack concepts.
+
 
 
 
