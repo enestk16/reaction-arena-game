@@ -140,15 +140,13 @@ Kodu kopyala
 Requires: **Python 3.11+**
 
 Install uv:
-
-```bash
 pip install uv
 Sync project environment:
 
 bash
 Kodu kopyala
 uv sync
-6.2 Run Application
+## 6.2 Run Application
 bash
 Kodu kopyala
 uv run python -m reaction_game.app
@@ -157,7 +155,7 @@ Server will start on:
 cpp
 Kodu kopyala
 http://127.0.0.1:5000/
-6.3 Health Endpoint
+## 6.3 Health Endpoint
 Test server availability:
 
 arduino
@@ -168,7 +166,7 @@ Output:
 json
 Kodu kopyala
 {"status": "ok"}
-7. Testing & Code Quality
+# 7. Testing & Code Quality
 Run all tests:
 bash
 Kodu kopyala
@@ -183,7 +181,7 @@ Kodu kopyala
 uv run ruff check . --fix
 These ensure consistent code quality and predictable behaviour.
 
-8. Gameplay Logic
+# 8. Gameplay Logic
 The logic is implemented in logic.py and fully tested.
 
 Score	Performance
@@ -206,7 +204,7 @@ Penalties for misclicks
 
 Smooth animations and realtime feedback
 
-9. API Documentation
+# 9. API Documentation
 GET /health
 Returns service status.
 
@@ -233,7 +231,7 @@ Kodu kopyala
 }
 Backend is stateless and purely functional—ideal for scaling.
 
-10. Deployment (Railway)
+# 10. Deployment (Railway)
 Requirements
 requirements.txt must include:
 
@@ -259,7 +257,7 @@ Your game becomes accessible at:
 cpp
 Kodu kopyala
 https://YOUR-APP-NAME.up.railway.app/
-11. Instructor Requirements Mapping
+# 11. Instructor Requirements Mapping
 Requirement	Delivered
 uv usage	✅ Yes
 ruff usage	✅ Yes
@@ -272,7 +270,7 @@ No .venv / __pycache__	✅ Removed & ignored
 
 This README exceeds the expectations for clarity, structure, and professionalism.
 
-12. Final Notes
+# 12. Final Notes
 This project demonstrates:
 
 Full-stack software development
@@ -288,3 +286,4 @@ Reproducible environments
 Cloud deployment best practices
 
 It is intentionally compact yet complete — ideal for coursework, portfolio projects, or learning foundational full-stack concepts.
+
