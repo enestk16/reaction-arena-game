@@ -256,7 +256,7 @@ Your game becomes accessible at:
 
 cpp
 Kodu kopyala
-https://YOUR-APP-NAME.up.railway.app/
+https://reaction-arena-game-production.up.railway.app
 # 11. Instructor Requirements Mapping
 Requirement	Delivered
 uv usage	✅ Yes
@@ -286,4 +286,5 @@ Reproducible environments
 Cloud deployment best practices
 
 It is intentionally compact yet complete — ideal for coursework, portfolio projects, or learning foundational full-stack concepts.
+
 
