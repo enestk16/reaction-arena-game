@@ -159,25 +159,25 @@ http://127.0.0.1:5000/
 Test server availability:
 
 arduino
-Kodu kopyala
+
 http://127.0.0.1:5000/health
 Output:
 
 json
-Kodu kopyala
+
 {"status": "ok"}
 # 7. Testing & Code Quality
 Run all tests:
 bash
-Kodu kopyala
+
 uv run pytest
 Run linting:
 bash
-Kodu kopyala
+
 uv run ruff check .
 Auto-fix:
 bash
-Kodu kopyala
+
 uv run ruff check . --fix
 These ensure consistent code quality and predictable behaviour.
 
@@ -211,20 +211,20 @@ Returns service status.
 Example Response:
 
 json
-Kodu kopyala
+
 {"status": "ok"}
 POST /api/score
 Submit the player's score.
 
 Request
 json
-Kodu kopyala
+
 {
   "score": 19
 }
 Response
 json
-Kodu kopyala
+
 {
   "score": 19,
   "performance": "good"
@@ -236,17 +236,17 @@ Requirements
 requirements.txt must include:
 
 nginx
-Kodu kopyala
+
 flask
 Start Command
 Set in Railway under Settings → Start Command:
 
 bash
-Kodu kopyala
+
 python -m reaction_game.app
 Production-Ready app.py
 python
-Kodu kopyala
+
 port = int(os.getenv("PORT", "5000"))
 app.run(debug=False, host="0.0.0.0", port=port)
 Generate Public Domain
@@ -255,7 +255,7 @@ Railway → Service → Settings → Public Networking → Generate Domain
 Your game becomes accessible at:
 
 cpp
-Kodu kopyala
+
 https://reaction-arena-game-production.up.railway.app
 # 11. Instructor Requirements Mapping
 Requirement	Delivered
@@ -286,5 +286,6 @@ Reproducible environments
 Cloud deployment best practices
 
 It is intentionally compact yet complete — ideal for coursework, portfolio projects, or learning foundational full-stack concepts.
+
 
 
