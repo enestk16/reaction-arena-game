@@ -257,9 +257,8 @@ bash
 Production-Ready app.py
 python`
 
-port = int(os.getenv("PORT", "5000"))
-app.run(debug=False, host="0.0.0.0", port=port)
 Generate Public Domain
+
 Railway → Service → Settings → Public Networking → Generate Domain
 
 Your game becomes accessible at:
@@ -267,6 +266,7 @@ Your game becomes accessible at:
 cpp
 
 https://reaction-arena-game-production.up.railway.app
+
 # 11. Instructor Requirements Mapping
 Requirement	Delivered
 uv usage	✅ Yes
@@ -303,6 +303,7 @@ Reproducible environments
 Cloud deployment best practices
 
 It is intentionally compact yet complete — ideal for coursework, portfolio projects, or learning foundational full-stack concepts.
+
 
 
 
