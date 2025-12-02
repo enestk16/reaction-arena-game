@@ -1,5 +1,5 @@
 # 🎮 Reaction Arena Game  
-### A Full-Stack Reaction-Time Training Application Built with Python, Flask, JavaScript, uv, ruff, pytest, and Railway
+### A Full-Stack Reaction-Time Training Application Built with Python, Flask, uv, ruff, pytest, and Railway
 
 Reaction Arena Game is a complete end-to-end software project demonstrating modern Python development practices.  
 It includes a browser-based reaction-time game, a Python backend, test automation, linting, and cloud deployment.  
@@ -100,7 +100,7 @@ The frontend communicates with the server via JSON POST requests.
 | Component | Technology |
 |----------|------------|
 | Backend | Python 3.11+, Flask |
-| Frontend | HTML5, CSS, Vanilla JavaScript |
+| Frontend | HTML5, CSS |
 | Package Manager | **uv** |
 | Linting | **ruff** |
 | Testing | **pytest** |
@@ -156,25 +156,22 @@ reaction-arena-game/
 Requires: **Python 3.11+**
 
 Install uv:
-pip install uv
+`pip install uv`
+
 Sync project environment:
+`uv sync`
 
-bash
-Kodu kopyala
-uv sync
 ## 6.2 Run Application
-bash
-Kodu kopyala
-uv run python -m reaction_game.app
-Server will start on:
+`uv run python -m reaction_game.app`
 
+Server will start on:
 cpp
-Kodu kopyala
-http://127.0.0.1:5000/
+`http://127.0.0.1:5000/`
+
 ## 6.3 Health Endpoint
 Test server availability:
 
-arduino
+`arduino`
 
 http://127.0.0.1:5000/health
 Output:
@@ -185,16 +182,13 @@ json
 # 7. Testing & Code Quality
 Run all tests:
 bash
+`uv run pytest`
 
-uv run pytest
 Run linting:
-bash
+`uv run ruff check .`
 
-uv run ruff check .
 Auto-fix:
-bash
-
-uv run ruff check . --fix
+`uv run ruff check . --fix`
 These ensure consistent code quality and predictable behaviour.
 
 # 8. Gameplay Logic
@@ -259,9 +253,9 @@ Set in Railway under Settings → Start Command:
 
 bash
 
-python -m reaction_game.app
+`python -m reaction_game.app
 Production-Ready app.py
-python
+python`
 
 port = int(os.getenv("PORT", "5000"))
 app.run(debug=False, host="0.0.0.0", port=port)
@@ -309,6 +303,7 @@ Reproducible environments
 Cloud deployment best practices
 
 It is intentionally compact yet complete — ideal for coursework, portfolio projects, or learning foundational full-stack concepts.
+
 
 
 
