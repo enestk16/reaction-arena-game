@@ -156,39 +156,55 @@ reaction-arena-game/
 Requires: **Python 3.11+**
 
 Install uv:
-`pip install uv`
+```
+pip install uv
+```
 
 Sync project environment:
-`uv sync`
+```
+uv sync
+```
 
 ## 6.2 Run Application
-`uv run python -m reaction_game.app`
+```
+uv run python -m reaction_game.app
+```
 
 Server will start on:
 cpp
-`http://127.0.0.1:5000/`
+```
+http://127.0.0.1:5000/
+```
 
 ## 6.3 Health Endpoint
 Test server availability:
 
-`arduino`
-
+```
+arduino
 http://127.0.0.1:5000/health
+```
+
 Output:
 
 json
 
 {"status": "ok"}
+
 # 7. Testing & Code Quality
 Run all tests:
-bash
-`uv run pytest`
+```
+uv run pytest
+```
 
 Run linting:
-`uv run ruff check .`
+```
+uv run ruff check .
+```
 
 Auto-fix:
-`uv run ruff check . --fix`
+```
+uv run ruff check . --fix
+```
 These ensure consistent code quality and predictable behaviour.
 
 # 8. Gameplay Logic
@@ -251,20 +267,16 @@ flask
 Start Command
 Set in Railway under Settings → Start Command:
 
-bash
-
-`python -m reaction_game.app
+```
+python -m reaction_game.app
 Production-Ready app.py
-python`
-
+python
+```
 Generate Public Domain
 
 Railway → Service → Settings → Public Networking → Generate Domain
 
 Your game becomes accessible at:
-
-cpp
-
 https://reaction-arena-game-production.up.railway.app
 
 # 11. Instructor Requirements Mapping
@@ -303,6 +315,7 @@ Reproducible environments
 Cloud deployment best practices
 
 It is intentionally compact yet complete — ideal for coursework, portfolio projects, or learning foundational full-stack concepts.
+
 
 
 
